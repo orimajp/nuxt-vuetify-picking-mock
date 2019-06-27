@@ -6,7 +6,7 @@
         v-model="valid"
         lazy-validation
       >
-        <v-layout wrap mb-3>
+        <v-layout wrap mb-2>
           <v-flex xs12>
             <v-text-field
               label="ロケーション"
@@ -198,17 +198,12 @@ export default {
       if (this.started) {
         this.locaCode = this.targetDetails[0].location
 //        this.setFocusItem()
-        setTimeout(()=>this.setFocusItem(), 2000)
+        setTimeout(()=>this.setFocusItem(), 1000)
         this.enableLoca(false)
         return
       }
 //      this.setFocusLoca()
-//      setTimeout(()=>this.setFocusLoca(), 2000)
-//      setTimeout(()=>this.setFocusLoca(), 1000)
-
-      setTimeout(()=>this.setFocusItem(), 1000)
-
-      setTimeout(()=>this.setFocusLoca(), 2000)
+      setTimeout(()=>this.setFocusLoca(), 1000)
     })
   },
   methods: {
