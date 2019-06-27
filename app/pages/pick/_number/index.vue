@@ -190,7 +190,7 @@ export default {
       this.enableLoca(true)
       this.locaCode = ''
 //      this.setFocusLoca()
-      setTimeout(()=>this.setFocusLoca(), 300)
+      setTimeout(()=>this.setFocusLoca(), 500)
     },
   },
   mounted() {
@@ -202,7 +202,7 @@ export default {
         return
       }
 //      this.setFocusLoca()
-      setTimeout(()=>this.setFocusLoca(), 300)
+      setTimeout(()=>this.setFocusLoca(), 700)
     })
   },
   methods: {
