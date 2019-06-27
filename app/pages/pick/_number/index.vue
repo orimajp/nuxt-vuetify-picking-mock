@@ -197,12 +197,13 @@ export default {
     this.$nextTick(() => {
       if (this.started) {
         this.locaCode = this.targetDetails[0].location
-        this.setFocusItem()
+//        this.setFocusItem()
+        setTimeout(()=>this.setFocusItem(), 1000)
         this.enableLoca(false)
         return
       }
 //      this.setFocusLoca()
-      setTimeout(()=>this.setFocusLoca(), 700)
+      setTimeout(()=>this.setFocusLoca(), 1000)
     })
   },
   methods: {
@@ -221,7 +222,7 @@ export default {
     },
     handleKyeDownTabLocation() {
       // タブキーガード
-      setTimeout(()=>this.setFocusLoca(), 300)
+      setTimeout(()=>this.setFocusLoca(), 500)
     },
     handleKeyUpEnterItem() {
       if (this.itemCode === '') {
@@ -238,7 +239,7 @@ export default {
     },
     handleKyeDownTabItem() {
       // タブキーガード
-      setTimeout(()=>this.setFocusItem(), 300)
+      setTimeout(()=>this.setFocusItem(), 500)
     },
 
     enableLoca(enable) {
