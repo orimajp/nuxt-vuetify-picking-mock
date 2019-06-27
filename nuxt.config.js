@@ -1,14 +1,25 @@
 const pkg = require('./package')
 const path = require('path');
 
-generateDir = {
-  generate: {dir: 'docs'}
-}
+// https://ja.nuxtjs.org/faq/github-pages/
+/* nuxt.config.js */
+// `DEPLOY_ENV` が `GH_PAGES` の場合のみ `router.base = '/<repository-name>/'` を追加する
+const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
+  router: {
+    base: '/nuxt-vuetify-picking-mock/'
+  }
+} : {}
+
+/*export default {
+  ...routerBase
+
+}*/
 
 module.exports = {
   mode: 'spa',
   srcDir: 'app',
-  ...generateDir,
+  generate: {dir: 'docs'},
+  ...routerBase,
 
   /*
   ** for IntelliJ IDEA / WebStorm
