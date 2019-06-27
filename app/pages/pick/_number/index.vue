@@ -16,7 +16,6 @@
               ref="locaField"
               @keyup.enter="handleKeyUpEnterLocation"
               @keydown.tab="handleKyeDownTabLocation"
-              autofocus
             >
             </v-text-field>
           </v-flex>
@@ -204,7 +203,7 @@ export default {
         return
       }
 //      this.setFocusLoca()
-//      setTimeout(()=>this.setFocusLoca(), 2000)
+      setTimeout(()=>this.setFocusLoca(), 2000)
     })
   },
   methods: {
