@@ -198,12 +198,12 @@ export default {
       if (this.started) {
         this.locaCode = this.targetDetails[0].location
 //        this.setFocusItem()
-        setTimeout(()=>this.setFocusItem(), 1000)
+        setTimeout(()=>this.setFocusItem(), 2000)
         this.enableLoca(false)
         return
       }
 //      this.setFocusLoca()
-      setTimeout(()=>this.setFocusLoca(), 1000)
+      setTimeout(()=>this.setFocusLoca(), 2000)
     })
   },
   methods: {
