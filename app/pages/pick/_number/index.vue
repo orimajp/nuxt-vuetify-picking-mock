@@ -203,7 +203,9 @@ export default {
         return
       }
 //      this.setFocusLoca()
-      setTimeout(()=>this.setFocusLoca(), 2000)
+//      setTimeout(()=>this.setFocusLoca(), 2000)
+      setTimeout(()=>this.setFocusLoca(), 1000)
+      setTimeout(()=>this.setFocusLoca(), 1000)
     })
   },
   methods: {
