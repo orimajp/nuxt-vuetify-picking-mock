@@ -14,7 +14,7 @@
 <script>
 export default {
   props: {
-    confirmMessage: String,
+    confirmMessage: {type: String, required: true},
   },
   data() {
     return {

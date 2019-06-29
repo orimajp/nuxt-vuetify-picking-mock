@@ -1,5 +1,5 @@
 <template>
-  <v-layout column>
+  <v-layout column justify-center>
     <v-flex xs12>
       <v-alert
         v-model="alert"

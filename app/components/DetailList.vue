@@ -51,8 +51,8 @@
 <script>
 export default {
   props: {
-    details: Array,
-    header: Boolean,
+    details: {type:Array, required: true},
+    header: {type:Boolean, required: true},
   },
   methods: {
     getStyleClass(index) {

@@ -1,5 +1,13 @@
 <template>
   <v-layout column justify-center>
+    <v-flex xs12>
+      <v-alert
+        v-model="completed"
+        type="info"
+      >
+        未完了の指示書はありません
+      </v-alert>
+    </v-flex>
 
     <v-flex xs12 mb-3>
       <v-alert
@@ -7,15 +15,6 @@
         type="warning"
       >
         仕掛かり中の指示書のみ選択可能です
-      </v-alert>
-    </v-flex>
-
-    <v-flex xs12>
-      <v-alert
-        v-model="completed"
-        type="info"
-      >
-        未完了の指示書はありません
       </v-alert>
     </v-flex>
 
