@@ -14,6 +14,7 @@
           ref="locaField"
           @keyup.enter="handleKeyUpEnterLocation"
           @keydown.tab="handleKyeDownTabLocation"
+          @focus="checkInvalidLocaFocus"
         >
         </v-text-field>
       </v-flex>
@@ -26,6 +27,7 @@
           ref="itemField"
           @keyup.enter="handleKeyUpEnterItem"
           @keydown.tab="handleKyeDownTabItem"
+          @focus="checkInvalidItemFocus"
         >
         </v-text-field>
       </v-flex>
@@ -57,12 +59,15 @@ export default {
       valid: true,
       locaCode: '',
       itemCode: '',
-      locaReadonly: false,
+      locaInputState: true,
     }
   },
   computed: {
     itemReadonly() {
-      return this.locaCode === ''
+      return this.locaInputState
+    },
+    locaReadonly() {
+      return !this.locaInputState
     },
     allCount() {
       if (this.targetDetails.length === 0) {
@@ -101,15 +106,25 @@ export default {
     this.$nextTick(() => {
       if (this.started) {
         this.locaCode = this.targetDetails[0].location
-        setTimeout(()=>this.setFocusItem(), 500)
+        setTimeout(()=>this.setFocusItem(), 400)
         this.enableLoca(false)
         return
       }
-      setTimeout(()=>this.setFocusLoca(), 500)
+      setTimeout(()=>this.setFocusLoca(), 400)
     })
   },
   methods: {
     ...mapActions('bookcase', ['pick']),
+    checkInvalidLocaFocus() {
+      if (this.locaReadonly) {
+        this.$refs.itemField.focus()
+      }
+    },
+    checkInvalidItemFocus() {
+      if (this.itemReadonly) {
+        this.$refs.locaField.focus()
+      }
+    },
     handleKeyUpEnterLocation() {
       if (this.locaCode === '') {
         return
@@ -119,12 +134,12 @@ export default {
         this.locaCode = ''
         return
       }
-      this.setFocusItem()
+      setTimeout(()=>this.setFocusItem(), 100)
       this.enableLoca(false)
     },
     handleKyeDownTabLocation() {
       // タブキーガード
-      setTimeout(()=>this.setFocusLoca(), 500)
+      setTimeout(()=>this.setFocusLoca(), 400)
     },
     handleKeyUpEnterItem() {
       if (this.itemCode === '') {
@@ -141,11 +156,11 @@ export default {
     },
     handleKyeDownTabItem() {
       // タブキーガード
-      setTimeout(()=>this.setFocusItem(), 500)
+      setTimeout(()=>this.setFocusItem(), 400)
     },
 
     enableLoca(enable) {
-      this.locaReadonly = !enable
+      this.locaInputState = enable
     },
     setFocusLoca() {
       if (!this.isError) {
@@ -153,7 +168,9 @@ export default {
       }
     },
     setFocusItem() {
-      this.$refs.itemField.focus()
+      if (!this.isError) {
+        this.$refs.itemField.focus()
+      }
     },
 
     displayError(message) {
