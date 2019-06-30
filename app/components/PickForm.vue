@@ -32,15 +32,10 @@
         </v-text-field>
       </v-flex>
       <v-flex xs4>
-        <div class="rest-count">
-          <transition name="fade" mode="out-in">
-            <span :key="completeCount">{{completeCount}}</span>
-          </transition>
-          /
-          <transition name="fade" mode="out-in">
-            <span :key="allCount">{{allCount}}</span>
-          </transition>
-        </div>
+        <PickCounter
+          :targetDetails="targetDetails"
+        >
+        </PickCounter>
       </v-flex>
     </v-layout>
   </v-form>
@@ -48,11 +43,15 @@
 
 <script>
 import { mapActions } from 'vuex'
+import PickCounter from '~/components/PickCounter'
 
 export default {
+  components: {
+    PickCounter
+  },
   props: {
     instruction: {type: Object, required: true},
-    targetDetails: {type: Array, required: true}
+    targetDetails: {type: Array, required: true},
   },
   data() {
     return {
@@ -69,23 +68,11 @@ export default {
     locaReadonly() {
       return !this.locaInputState
     },
-    allCount() {
-      if (this.targetDetails.length === 0) {
-        return 0
-      }
-      return this.targetDetails[0].allCount
-    },
     started() {
       if (this.targetDetails.length === 0) {
         return false
       }
       return this.targetDetails[0].started
-    },
-    completeCount() {
-      if (this.targetDetails.length === 0) {
-        return 0
-      }
-      return this.targetDetails[0].completeCount
     },
   },
   watch: {
@@ -163,14 +150,10 @@ export default {
       this.locaInputState = enable
     },
     setFocusLoca() {
-      if (!this.isError) {
-        this.$refs.locaField.focus()
-      }
+      this.$refs.locaField.focus()
     },
     setFocusItem() {
-      if (!this.isError) {
-        this.$refs.itemField.focus()
-      }
+      this.$refs.itemField.focus()
     },
 
     displayError(message) {
@@ -182,21 +165,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.rest-count {
-  font-size: 200%;
-  color: gray;
-  padding: 10px;
-  margin-left: 10px;
-  text-align: right;
-  border-color: gray;
-  border-style: solid;
-}
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .05s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-}
-</style>
