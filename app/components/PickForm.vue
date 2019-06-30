@@ -6,30 +6,26 @@
   >
     <v-layout wrap mb-2>
       <v-flex xs12>
-        <v-text-field
-          label="ロケーション"
-          v-model="locaCode"
-          :readonly="locaReadonly"
-          type="number"
-          ref="locaField"
-          @keyup.enter="handleKeyUpEnterLocation"
-          @keydown.tab="handleKyeDownTabLocation"
-          @focus="checkInvalidLocaFocus"
+        <PickLocaField
+          ref="pickLocaField"
+          :targetDetails="targetDetails"
+          :locaReadonly="locaReadonly"
+          @setLocaNextFocus="setLocaNextFocus"
+          @enableLoca="enableLoca"
+          @displayError="displayError"
         >
-        </v-text-field>
+        </PickLocaField>
       </v-flex>
       <v-flex xs8>
-        <v-text-field
-          label="商品コード"
-          v-model="itemCode"
-          :readonly="itemReadonly"
-          type="number"
-          ref="itemField"
-          @keyup.enter="handleKeyUpEnterItem"
-          @keydown.tab="handleKyeDownTabItem"
-          @focus="checkInvalidItemFocus"
+        <PickItemField
+          ref="pickItemField"
+          :targetDetails="targetDetails"
+          :itemReadonly="itemReadonly"
+          @setItemNextFocus="setItemNextFocus"
+          @pickDetail="pickDetail"
+          @displayError="displayError"
         >
-        </v-text-field>
+        </PickItemField>
       </v-flex>
       <v-flex xs4>
         <PickCounter
@@ -44,10 +40,14 @@
 <script>
 import { mapActions } from 'vuex'
 import PickCounter from '~/components/PickCounter'
+import PickLocaField from '~/components/PickLocaField'
+import PickItemField from '~/components/PickItemField'
 
 export default {
   components: {
-    PickCounter
+    PickCounter,
+    PickLocaField,
+    PickItemField
   },
   props: {
     instruction: {type: Object, required: true},
@@ -56,17 +56,15 @@ export default {
   data() {
     return {
       valid: true,
-      locaCode: '',
-      itemCode: '',
       locaInputState: true,
     }
   },
   computed: {
-    itemReadonly() {
-      return this.locaInputState
-    },
     locaReadonly() {
       return !this.locaInputState
+    },
+    itemReadonly() {
+      return this.locaInputState
     },
     started() {
       if (this.targetDetails.length === 0) {
@@ -85,77 +83,38 @@ export default {
         return;
       }
       this.enableLoca(true)
-      this.locaCode = ''
-      setTimeout(()=>this.setFocusLoca(), 500)
+      this.$refs.pickLocaField.clearLoca()
+      setTimeout(()=>this.$refs.pickLocaField.setFocusLoca(), 500)
     },
   },
   mounted() {
     this.$nextTick(() => {
       if (this.started) {
-        this.locaCode = this.targetDetails[0].location
-        setTimeout(()=>this.setFocusItem(), 400)
+        this.$refs.pickLocaField.setLoca(this.targetDetails[0].location)
+        setTimeout(()=>this.$refs.pickItemField.setFocusItem(), 400)
         this.enableLoca(false)
         return
       }
-      setTimeout(()=>this.setFocusLoca(), 400)
+      setTimeout(()=>this.$refs.pickLocaField.setFocusLoca(), 400)
     })
   },
   methods: {
     ...mapActions('bookcase', ['pick']),
-    checkInvalidLocaFocus() {
-      if (this.locaReadonly) {
-        this.$refs.itemField.focus()
-      }
-    },
-    checkInvalidItemFocus() {
-      if (this.itemReadonly) {
-        this.$refs.locaField.focus()
-      }
-    },
-    handleKeyUpEnterLocation() {
-      if (this.locaCode === '') {
-        return
-      }
-      if (this.locaCode !== this.targetDetails[0].location) {
-        this.displayError('ロケーションエラー')
-        this.locaCode = ''
-        return
-      }
-      setTimeout(()=>this.setFocusItem(), 100)
-      this.enableLoca(false)
-    },
-    handleKyeDownTabLocation() {
-      // タブキーガード
-      setTimeout(()=>this.setFocusLoca(), 400)
-    },
-    handleKeyUpEnterItem() {
-      if (this.itemCode === '') {
-        return
-      }
-      if (this.itemCode !== this.targetDetails[0].itemCode) {
-        this.displayError('商品コードエラー')
-        this.itemCode = ''
-        return
-      }
-      this.itemCode = ''
+    pickDetail() {
       this.pick({instructionNumber: this.instruction.instructionNumber,
         detailId: this.targetDetails[0].detailId})
     },
-    handleKyeDownTabItem() {
-      // タブキーガード
-      setTimeout(()=>this.setFocusItem(), 400)
-    },
-
     enableLoca(enable) {
       this.locaInputState = enable
     },
-    setFocusLoca() {
-      this.$refs.locaField.focus()
+    setItemNextFocus() {
+      this.$refs.pickLocaField.setFocusLoca()
     },
-    setFocusItem() {
-      this.$refs.itemField.focus()
+    setLocaNextFocus() {
+      this.$refs.pickItemField.setFocusItem()
     },
 
+    // 親コンポーネントメソッド呼び出しメソッド
     displayError(message) {
       this.$emit('displayError', message)
     },
