@@ -90,10 +90,10 @@ export default {
       return this.instructions[0]
     },
     goSelect() {
-      this.$router.push('/select')
+      this.$router.replace('/select')
     },
     goStartWork() {
-      this.$router.push('/pick/' + this.instructionNumber)
+      this.$router.replace('/pick/' + this.instructionNumber)
     },
   }
 }

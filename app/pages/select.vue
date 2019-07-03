@@ -92,10 +92,10 @@ export default {
     ...mapGetters('bookcase', ['isCompleted', 'getNonCompleteLocationBlocks',
       'getStartedLocationBlocks', 'existsStartedInstruction']),
     goTop() {
-      this.$router.push('/')
+      this.$router.replace('/')
     },
     goList(code) {
-      this.$router.push('/list/' + code)
+      this.$router.replace('/list/' + code)
     },
     targetInstructionCount(block) {
       console.log(block)

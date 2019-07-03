@@ -27,7 +27,7 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(() => setTimeout(() => this.$router.push('/select'), 1000))
+    this.$nextTick(() => setTimeout(() => this.$router.replace('/select'), 1000))
   }
 }
 </script>

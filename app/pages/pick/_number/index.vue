@@ -115,7 +115,7 @@ export default {
   },
   methods: {
     complete() {
-      this.$router.push('/complete')
+      this.$router.replace('/complete')
     },
     cancel() {
       if (this.isError) {
@@ -133,7 +133,7 @@ export default {
       this.$refs.bottomSheet.openSheet()
     },
     goSelect() {
-      this.$router.push('/select')
+      this.$router.replace('/select')
     },
   }
 }

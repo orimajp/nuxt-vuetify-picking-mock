@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     goSelect() {
-      this.$router.push('/select')
+      this.$router.replace('/select')
     },
   },
 }
