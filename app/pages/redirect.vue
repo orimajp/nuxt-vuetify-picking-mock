@@ -10,13 +10,13 @@ export default {
       title: '',
     }
   },
-  fetch({base, redirect, query}) {
+  fetch({base, route, query}) {
     const param = query.p
     if (param === undefined) {
       return redirect('/')
     }
     const redirectPath = '/' + param.replace(base, '')
-    return redirect(redirectPath)
+    return route.replace(redirectPath)
   }
 }
 </script>
