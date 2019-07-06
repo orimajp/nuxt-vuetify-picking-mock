@@ -1,40 +1,32 @@
 <template>
-  <v-form
-    ref="form"
-    v-model="valid"
-    lazy-validation
-  >
-    <v-layout wrap mb-2>
-      <v-flex xs12>
-        <PickLocaField
-          ref="pickLocaField"
-          :targetDetails="targetDetails"
-          :locaReadonly="locaReadonly"
-          @setLocaNextFocus="setLocaNextFocus"
-          @enableLoca="enableLoca"
-          @displayError="displayError"
-        >
-        </PickLocaField>
-      </v-flex>
-      <v-flex xs8>
-        <PickItemField
-          ref="pickItemField"
-          :targetDetails="targetDetails"
-          :itemReadonly="itemReadonly"
-          @setItemNextFocus="setItemNextFocus"
-          @pickDetail="pickDetail"
-          @displayError="displayError"
-        >
-        </PickItemField>
-      </v-flex>
-      <v-flex xs4>
-        <PickCounter
-          :targetDetails="targetDetails"
-        >
-        </PickCounter>
-      </v-flex>
-    </v-layout>
-  </v-form>
+  <v-layout wrap mb-2>
+    <v-flex xs12>
+      <PickLocaField
+        ref="pickLocaField"
+        :targetDetails="targetDetails"
+        :locaReadonly="locaReadonly"
+        @setLocaNextFocus="setLocaNextFocus"
+        @enableLoca="enableLoca"
+      >
+      </PickLocaField>
+    </v-flex>
+    <v-flex xs8>
+      <PickItemField
+        ref="pickItemField"
+        :targetDetails="targetDetails"
+        :itemReadonly="itemReadonly"
+        @setItemNextFocus="setItemNextFocus"
+        @pickDetail="pickDetail"
+      >
+      </PickItemField>
+    </v-flex>
+    <v-flex xs4>
+      <PickCounter
+        :targetDetails="targetDetails"
+      >
+      </PickCounter>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
@@ -115,9 +107,6 @@ export default {
     },
 
     // 親コンポーネントメソッド呼び出しメソッド
-    displayError(message) {
-      this.$emit('displayError', message)
-    },
     complete() {
       this.$emit('complete')
     },

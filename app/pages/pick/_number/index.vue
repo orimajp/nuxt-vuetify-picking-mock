@@ -5,7 +5,6 @@
         :targetDetails="targetDetails"
         :instruction="instruction"
         @complete="complete"
-        @displayError="openSnackbar"
       >
       </PickForm>
 
@@ -31,12 +30,6 @@
       @confirm="goSelect"
     >
     </WorkBottomSheet>
-
-    <ErrorSnackbar
-      ref="snackbar"
-    >
-    </ErrorSnackbar>
-
     <v-footer
       fixied="false"
       app
@@ -57,7 +50,6 @@
 import PickForm from '~/components/PickForm'
 import WorkBottomSheet from '~/components/WorkBottomSheet'
 import DetailList from '~/components/DetailList'
-import ErrorSnackbar from '~/components/ErrorSnackbar'
 
 function getInstruction(store, instructionNumber) {
   const instruction = store.getters['bookcase/getInstruction'](instructionNumber)
@@ -75,7 +67,6 @@ export default {
     PickForm,
     WorkBottomSheet,
     DetailList,
-    ErrorSnackbar
   },
   head() {
     return {
@@ -124,11 +115,6 @@ export default {
       }
       this.openSheet()
     },
-
-    openSnackbar(message) {
-      this.$refs.snackbar.open(message)
-    },
-
     openSheet() {
       this.$refs.bottomSheet.openSheet()
     },

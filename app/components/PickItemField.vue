@@ -1,15 +1,23 @@
 <template>
-  <v-text-field
-    label="商品コード"
-    v-model="itemCode"
-    :readonly="itemReadonly"
-    type="number"
-    ref="itemField"
-    @focus="checkInvalidItemFocus"
-    @keyup.enter="handleKeyUpEnterItem"
-    @keydown.tab="handleKyeDownTabItem"
+  <v-form
+    ref="form"
+    v-model="valid"
+    lazy-validation
+    onsubmit="return false"
   >
-  </v-text-field>
+    <v-text-field
+      label="商品コード"
+      v-model="itemCode"
+      :readonly="itemReadonly"
+      :rules="itemCodeRules"
+      type="number"
+      ref="itemField"
+      @focus="checkInvalidItemFocus"
+      @keyup.enter="handleKeyUpEnterItem"
+      @keydown.tab="handleKyeDownTabItem"
+    >
+    </v-text-field>
+  </v-form>
 </template>
 
 <script>
@@ -20,7 +28,12 @@ export default {
   },
   data() {
     return {
+      valid: true,
+      correct: true,
       itemCode: '',
+      itemCodeRules: [
+        v => this.correct || '商品コードエラー'
+      ],
     }
   },
   methods: {
@@ -34,11 +47,13 @@ export default {
         return
       }
       if (this.itemCode !== this.targetDetails[0].itemCode) {
-        this.displayError('商品コードエラー')
+        this.correct = false
         this.itemCode = ''
         return
       }
       this.itemCode = ''
+      this.correct = true
+      this.$refs.form.resetValidation()
       this.pickDetail()
     },
     handleKyeDownTabItem() {
@@ -56,9 +71,6 @@ export default {
     pickDetail() {
       this.$emit('pickDetail')
     },
-    displayError(messaga) {
-      this.$emit('displayError', messaga)
-    }
   }
 }
 </script>

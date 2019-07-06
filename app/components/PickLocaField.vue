@@ -1,15 +1,23 @@
 <template>
-  <v-text-field
-    label="ロケーション"
-    v-model="locaCode"
-    :readonly="locaReadonly"
-    type="number"
-    ref="locaField"
-    @focus="checkInvalidLocaFocus"
-    @keyup.enter="handleKeyUpEnterLocation"
-    @keydown.tab="handleKyeDownTabLocation"
+  <v-form
+    ref="form"
+    v-model="valid"
+    lazy-validation
+    onsubmit="return false"
   >
-  </v-text-field>
+    <v-text-field
+      label="ロケーション"
+      v-model="locaCode"
+      :readonly="locaReadonly"
+      :rules="locaCodeRules"
+      type="number"
+      ref="locaField"
+      @focus="checkInvalidLocaFocus"
+      @keyup.enter="handleKeyUpEnterLocation"
+      @keydown.tab="handleKyeDownTabLocation"
+    >
+    </v-text-field>
+  </v-form>
 </template>
 
 <script>
@@ -20,7 +28,12 @@ export default {
   },
   data() {
     return {
+      valid: true,
+      correct: true,
       locaCode: '',
+      locaCodeRules: [
+        v => this.correct || 'ロケーションエラー',
+      ],
     }
   },
   methods: {
@@ -34,10 +47,12 @@ export default {
         return
       }
       if (this.locaCode !== this.targetDetails[0].location) {
-        this.displayError('ロケーションエラー')
+        this.correct = false
         this.clearLoca()
         return
       }
+      this.correct = true
+      this.$refs.form.resetValidation()
       this.enableLoca(false)
       setTimeout(()=>this.setLocaNextFocus(), 100)
     },
@@ -62,9 +77,6 @@ export default {
     enableLoca(enable) {
       this.$emit('enableLoca', enable)
     },
-    displayError(messaga) {
-      this.$emit('displayError', messaga)
-    }
   }
 }
 </script>
