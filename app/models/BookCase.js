@@ -20,7 +20,6 @@ export default class BookCase {
         instruction = tmp
       }
     })
-    console.log(instruction)
     return instruction
   }
 

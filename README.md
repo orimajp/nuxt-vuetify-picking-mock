@@ -1,22 +1,43 @@
 # nuxt-vuetify-picking-mock
+出荷検品アプリ風モックプロジェクト。
 
-> Picking sample
+# 利用技術
+* Nuxt.js
+* Vuetify
 
-## Build Setup
+# 実行方法
+1. チェックアウト
+2. `npm install`
+3. `npm run dev`
 
-``` bash
-# install dependencies
-$ yarn install
+# デモ
+https://orimajp.github.io/nuxt-vuetify-picking-mock/
 
-# serve with hot reload at localhost:3000
-$ yarn run dev
+# 画面説明
+## 業務選択画面
+* 「出荷検品」押下で指示書選択画面に遷移
+* この画面に戻ってくるとVuexで保持しているデータが初期化される
 
-# build for production and launch server
-$ yarn run build
-$ yarn start
+## 指示書選択画面
+* リスト押下で指示書確認画面に遷移
+* 「業務選択」押下で業務選択画面に遷移
+* 仕掛かり中の指示書がある場合、その指示書のみ選択可能
 
-# generate static project
-$ yarn run generate
-```
+## 指示書確認画面
+* 「作業開始」押下で検品作業開始
+* 「指示書選択」押下で指示書選択画面に遷移
 
-For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+# 出荷検品画面
+* ロケーション入力欄に対し、水色背景のカレント指示書明細にある`xx-x`形式のロケーションを数字のみ入力しEnter
+* 商品コード入力欄に対し、カレント指示書明細の商品コードを入力しEnter
+* 上記を繰り替えし指示書明細が無くなったら、完了表示を経て指示書選択画面に自動遷移
+* 「検品中断」押下により表示された選択肢から「指示書選択へ」を選ぶと指示書選択画面に戻る
+
+# 制約事項
+iOSのMobile Safariでは画面遷移時に入力欄へのフォーカスが当たらないため、指で入力欄を選択する必要がある
+
+# 工夫ポイント
+
+* 動的パス利用ページのリロード時`Not Found`問題をリダイレクトにより解消
+* `router.replace()`によるバラウザバック抑止
+* テキストフィールド単位のエラーチェック

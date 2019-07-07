@@ -55,7 +55,6 @@ export const actions = {
   // https://mseeeen.msen.jp/deal-with-multiple-arguments-with-action-or-mutation-in-vuex/
   // https://qiita.com/amagurik2/items/bc426b7a9fcec051b885
   pick({commit}, {instructionNumber, detailId}) {
-    console.log(`instructionNumber=${instructionNumber}, detailId=${detailId}`)
     commit('pick', {instructionNumber, detailId})
   },
 }

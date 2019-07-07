@@ -81,10 +81,8 @@ export default {
     },
     targetBlocks() {
       if (this.existsStartedInstruction()) {
-        console.log('開始済リスト')
         return this.getStartedLocationBlocks()
       }
-      console.log('全リスト')
       return this.getNonCompleteLocationBlocks()
     },
   },
@@ -98,7 +96,6 @@ export default {
       this.$router.replace('/list/' + code)
     },
     targetInstructionCount(block) {
-      console.log(block)
       if (this.existsStartedInstruction()) {
         return block.startedInstructionsNumber()
       }

@@ -28,7 +28,6 @@ export default class Instruction {
    */
   addDetail(detail) {
     this.details.push(detail)
-    console.log('detail count=' + this.details.length)
   }
 
   /**
